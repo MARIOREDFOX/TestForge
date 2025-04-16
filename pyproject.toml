@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "testforge"
+version = "0.1.0"
+description = "Test automation framework for hardware/system-level validation (CXL, PCIe, BMC, Firmware)"
+authors = [
+    { name="Marie Infantraj", email="marioredfoxfshm@gmail.com" }
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+keywords = ["hardware", "automation", "CXL", "PCIe", "firmware", "BMC"]
+dependencies = [
+    "paramiko",
+    "PyYAML",
+    "requests",
+    "click",
+]
+
+[project.scripts]
+testforge = "testforge.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
