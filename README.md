@@ -9,6 +9,16 @@
 - Rich CLI interface
 - Scalable and pip-installable
 
+## Installation
+```bash
+git clone [https://github.com/your-org/testforge.git](https://github.com/MARIOREDFOX/TestForge.git)
+cd testforge
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+testforge version
+```
+
 ## 📁 Project Structure
 
 ```text
