@@ -7,3 +7,6 @@
 
 === Running Test: check_ping on google.com ===
 [OK] google.com is reachable.
+
+=== Running Test: check_ping on google.com ===
+[OK] google.com is reachable.
