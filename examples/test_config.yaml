@@ -1,8 +1,8 @@
 tests:
-  - name: check_cxl_health
+  - name: check_ping
     enabled: true
-    tags: [cxl, health]
-  - name: firmware_upgrade
-    enabled: true
-    tags: [firmware, upgrade]
+    tags: [ping]
 
+  - name: check_all_health
+    enabled: true
+    tags: [all]
