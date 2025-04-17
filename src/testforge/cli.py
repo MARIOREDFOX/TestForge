@@ -6,12 +6,21 @@ def cli():
     """TestForge - Hardware Automation CLI"""
     pass
 
+#@cli.command()
+#@click.option('--tag', default=None, help="Run tests by tag")
+#@click.option('--test', default=None, help="Run specific test file")
+#def run(tag, test):
+#    """Run tests"""
+#    run_tests(tag=tag, test=test)
+
 @cli.command()
 @click.option('--tag', default=None, help="Run tests by tag")
 @click.option('--test', default=None, help="Run specific test file")
-def run(tag, test):
+@click.option('--env', default=None, help="Path to environment YAML")
+def run(tag, test, env):
     """Run tests"""
-    run_tests(tag=tag, test=test)
+    from testforge.core.executor import run_tests
+    run_tests(tag=tag, test=test, env_file=env)
 
 @cli.command()
 def version():
