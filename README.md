@@ -119,3 +119,7 @@ python3 -m unittest discover tests
 ## License
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+## PYPI
+[![PyPI version](https://badge.fury.io/py/testforge-cli-utils.svg)](https://badge.fury.io/py/testforge-cli-utils)
+https://pypi.org/project/testforge-cli-utils/0.1.6/
+
