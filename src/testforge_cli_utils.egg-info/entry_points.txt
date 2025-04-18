@@ -1,0 +1,2 @@
+[console_scripts]
+testforge = testforge_cli_utils.cli:cli

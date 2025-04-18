@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "testforge"
-version = "0.1.0"
+name = "testforge-cli-utils"
+version = "0.1.6"
 description = "Test Automation Framework for system-level validation (CXL, PCIe, BMC, firmware)"
 authors = [
     { name = "Marie Infantraj", email = "marioredfoxfshm@gmail.com" }
@@ -19,5 +19,4 @@ dependencies = [
 ]
 
 [project.scripts]
-testforge = "testforge.cli:cli"
-
+testforge = "testforge_cli_utils.cli:cli"

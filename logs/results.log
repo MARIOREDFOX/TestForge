@@ -329,3 +329,118 @@ nvme0n1     259:0    0 238.5G  0 disk
                                       /
 [2025-04-18 11:47:55] [PASS] Firmware Info:
 
+[2025-04-18 13:06:51] === Running Test: check_all_health on 192.168.1.6 ===
+[2025-04-18 13:06:53] [PASS] 192.168.1.6 is reachable.
+[2025-04-18 13:06:54] [PASS] CPU Info:
+Architecture:                         x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        43 bits physical, 48 bits virtual
+Byte Order:                           Little Endian
+CPU(s):                               8
+On-line CPU(s) list:                  0-7
+Vendor ID:                            AuthenticAMD
+Model name:                           AMD Ryzen 5 PRO 3500U w/ Radeon Vega Mobile Gfx
+CPU family:                           23
+Model:                                24
+Thread(s) per core:                   2
+Core(s) per socket:                   4
+Socket(s):                            1
+Stepping:                             1
+Frequency boost:                      enabled
+CPU(s) scaling MHz:                   95%
+CPU max MHz:                          2100.0000
+CPU min MHz:                          1400.0000
+BogoMIPS:                             4192.16
+Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb hw_pstate ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt sha_ni xsaveopt xsavec xgetbv1 clzero irperf xsaveerptr arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif overflow_recov succor smca sev sev_es
+Virtualization:                       AMD-V
+L1d cache:                            128 KiB (4 instances)
+L1i cache:                            256 KiB (4 instances)
+L2 cache:                             2 MiB (4 instances)
+L3 cache:                             4 MiB (1 instance)
+NUMA node(s):                         1
+NUMA node0 CPU(s):                    0-7
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Not affected
+Vulnerability Retbleed:               Mitigation; untrained return thunk; SMT vulnerable
+Vulnerability Spec rstack overflow:   Mitigation; Safe RET
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Retpolines; IBPB conditional; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+[2025-04-18 13:06:54] [PASS] Memory Info:
+total        used        free      shared  buff/cache   available
+Mem:            13Gi       1.6Gi        10Gi        24Mi       2.2Gi        11Gi
+Swap:          4.0Gi          0B       4.0Gi
+[2025-04-18 13:06:54] [PASS] BIOS Info:
+
+[2025-04-18 13:06:54] [PASS] BMC Info:
+
+[2025-04-18 13:06:54] [PASS] Disk Info:
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0  55.4M  1 loop /snap/core18/2846
+loop1         7:1    0 104.2M  1 loop /snap/core/17200
+loop2         7:2    0     4K  1 loop /snap/bare/5
+loop3         7:3    0  55.4M  1 loop /snap/core18/2855
+loop4         7:4    0  63.7M  1 loop /snap/core20/2496
+loop5         7:5    0  63.8M  1 loop /snap/core20/2501
+loop6         7:6    0  73.9M  1 loop /snap/core22/1802
+loop7         7:7    0  73.9M  1 loop /snap/core22/1908
+loop8         7:8    0  66.2M  1 loop /snap/core24/716
+loop9         7:9    0  66.2M  1 loop /snap/core24/739
+loop10        7:10   0 118.5M  1 loop /snap/drawio/241
+loop11        7:11   0 121.6M  1 loop /snap/drawio/244
+loop12        7:12   0  83.6M  1 loop /snap/elegant-screen-recorder/1
+loop13        7:13   0   242M  1 loop /snap/firefox/6019
+loop14        7:14   0  11.1M  1 loop /snap/firmware-updater/147
+loop15        7:15   0   242M  1 loop /snap/firefox/6042
+loop16        7:16   0  11.1M  1 loop /snap/firmware-updater/167
+loop17        7:17   0 164.8M  1 loop /snap/gnome-3-28-1804/198
+loop18        7:18   0 505.1M  1 loop /snap/gnome-42-2204/176
+loop19        7:19   0   516M  1 loop /snap/gnome-42-2204/202
+loop20        7:20   0 404.1M  1 loop /snap/gnome-46-2404/77
+loop21        7:21   0 404.4M  1 loop /snap/gnome-46-2404/90
+loop22        7:22   0  69.8M  1 loop /snap/go/10866
+loop23        7:23   0  69.8M  1 loop /snap/go/10888
+loop24        7:24   0  91.7M  1 loop /snap/gtk-common-themes/1535
+loop25        7:25   0 211.5M  1 loop /snap/mesa-2404/143
+loop26        7:26   0 207.4M  1 loop /snap/mesa-2404/495
+loop27        7:27   0 165.1M  1 loop /snap/mysql-workbench-community/13
+loop28        7:28   0 171.1M  1 loop /snap/mysql-workbench-community/15
+loop29        7:29   0 165.9M  1 loop /snap/postman/309
+loop30        7:30   0 166.2M  1 loop /snap/postman/311
+loop31        7:31   0  10.8M  1 loop /snap/snap-store/1248
+loop32        7:32   0  10.8M  1 loop /snap/snap-store/1270
+loop33        7:33   0  44.4M  1 loop /snap/snapd/23545
+loop34        7:34   0   568K  1 loop /snap/snapd-desktop-integration/253
+loop35        7:35   0   564K  1 loop /snap/snapd-desktop-integration/247
+loop36        7:36   0  44.4M  1 loop /snap/snapd/23771
+loop37        7:37   0  87.2M  1 loop /snap/sqlitebrowser/3233
+loop38        7:38   0 108.2M  1 loop /snap/sqlitebrowser/4598
+loop39        7:39   0  64.4M  1 loop /snap/sublime-text/187
+loop40        7:40   0  64.4M  1 loop /snap/sublime-text/196
+loop41        7:41   0 210.5M  1 loop /snap/thunderbird/702
+loop42        7:42   0  92.1M  1 loop /snap/todoist/1335
+loop43        7:43   0 210.2M  1 loop /snap/thunderbird/706
+loop44        7:44   0  92.1M  1 loop /snap/todoist/1336
+loop45        7:45   0   2.6M  1 loop /snap/upx/1
+loop46        7:46   0 321.1M  1 loop /snap/vlc/3777
+nvme0n1     259:0    0 238.5G  0 disk 
+├─nvme0n1p1 259:1    0     1G  0 part /boot/efi
+└─nvme0n1p2 259:2    0 237.4G  0 part /var/snap/firefox/common/host-hunspell
+                                      /
+[2025-04-18 13:06:54] [PASS] Firmware Info:
+
+[2025-04-18 13:17:17] === Running Test: check_all_health on 192.168.1.6 ===
+[2025-04-18 13:17:29] [FAIL] 192.168.1.6 is not reachable.
+[2025-04-18 13:19:49] === Running Test: check_all_health on 192.168.1.6 ===
+[2025-04-18 13:20:01] [FAIL] 192.168.1.6 is not reachable.
+[2025-04-18 16:40:18] === Running Test: check_all_health on 192.168.1.6 ===
+[2025-04-18 16:40:30] [FAIL] 192.168.1.6 is not reachable.
+[2025-04-18 16:55:03] === Running Test: check_all_health on 192.168.1.6 ===
+[2025-04-18 16:55:15] [FAIL] 192.168.1.6 is not reachable.
