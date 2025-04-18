@@ -19,6 +19,49 @@ pip install -e .
 testforge version
 ```
 
+## Setup Testing Linux Machine
+```text
+✅ 1. Find the Local IP of the Target Linux Machine
+On that machine, run:
+ip a | grep inet
+You’ll see something like: 192.168.1.101
+
+✅ 2. Ensure SSH is Running
+Run on the target:
+sudo systemctl status sshd
+sudo apt update
+sudo apt install openssh-server -y
+sudo systemctl enable ssh
+sudo systemctl start ssh
+If it’s not active:
+sudo systemctl start sshd
+sudo systemctl status ssh
+
+✅ 3. Set Up SSH Passwordless Login (From your TestForge Machine)
+On the machine where you're running testforge, do:
+ssh-keygen -t rsa -b 4096 -C "testforge@localhost"
+ssh-copy-id marieinfa@192.168.1.101
+After this, test it:
+ssh marieinfa@192.168.1.101
+It should login without prompting for a password
+
+✅ 4. On your TestForge Host: Generate SSH Key run below
+ssh-keygen
+ssh-copy-id <username>@<target-ip>
+Test the Connection
+ssh <username>@<target-ip>
+
+Note:
+Check Linux Target's Firewall / SSH Access
+run:
+sudo ufw status
+sudo ufw allow ssh
+sudo systemctl status ssh
+sudo systemctl status ssh
+sudo systemctl start ssh
+
+```
+
 ## 📁 Project Structure
 
 ```text
