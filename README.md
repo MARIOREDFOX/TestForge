@@ -121,5 +121,4 @@ python3 -m unittest discover tests
 
 ## PYPI
 [![PyPI version](https://badge.fury.io/py/testforge-cli-utils.svg)](https://badge.fury.io/py/testforge-cli-utils)
-https://pypi.org/project/testforge-cli-utils/0.1.6/
 
