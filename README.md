@@ -11,7 +11,7 @@
 
 ## Installation
 ```bash
-git clone [https://github.com/your-org/testforge.git](https://github.com/MARIOREDFOX/TestForge.git)
+git clone https://github.com/MARIOREDFOX/TestForge.git
 cd testforge
 python3 -m venv .venv
 source .venv/bin/activate
@@ -109,9 +109,10 @@ testforge/
 ## Usage
 
 ```bash
-pip install testforge
-testforge run --tag firmware
+pip install testforge-cli-utils
+testforge version
 testforge run --env examples/env.yaml
+testforge run --tag all --env examples/env.yaml --config-file examples/test_config.yaml
 
 python3 -m unittest discover tests
 ```
