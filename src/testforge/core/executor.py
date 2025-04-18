@@ -4,12 +4,18 @@ from testforge.utils.host_check import is_host_alive
 from testforge.utils import hardware_info
 from testforge.utils.retry import retry_test
 from testforge.runner.cxl_health_check_runner import CXLHealthCheckRunner
+from testforge.utils.hardware_info import HardwareInfo
+import datetime
+
 
 # Register test runners
 TEST_RUNNERS = {
     "cxl_health_check": CXLHealthCheckRunner,
     # Add more runners here in future
 }
+
+def timestamp():
+    return datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
 
 def load_config(config_file):
     """Loads the YAML configuration for tests."""
@@ -52,32 +58,68 @@ def execute_test(test, env):
     tag = test.get("tags", [])[0]
     logs = []
 
-    logs.append(f"\n=== Running Test: {test['name']} on {host} ===")
+    # Log the start of the test and print it
+    logs.append(f"{timestamp()} === Running Test: {test['name']} on {host} ===")
+    print(logs[-1])
 
+    # Check if the host is alive
     if not is_host_alive(host):
-        logs.append(f"[FAIL] {host} is not reachable.")
+        logs.append(f"{timestamp()} [FAIL] {host} is not reachable.")
+        print(logs[-1])  # Print it to the console
         write_logs(logs)
         return False
 
-    logs.append(f"[OK] {host} is reachable.")
+    logs.append(f"{timestamp()} [PASS] {host} is reachable.")
+    print(logs[-1])  # Print it to the console
 
+    hw = HardwareInfo(host)  # Instantiate once and reuse
+
+    # Execute specific checks based on tag
     if tag == "ping":
-        # Already covered by is_host_alive
-        pass
-    elif tag == "firmware":
-        logs.append(hardware_info.get_firmware_info(host))
-    elif tag == "cpu":
-        logs.append(hardware_info.get_cpu_info(host))
-    elif tag == "bmc":
-        logs.append(hardware_info.get_bmc_info(host))
-    elif tag == "all":
-        logs.append(hardware_info.get_cpu_info(host))
-        logs.append(hardware_info.get_memory_info(host))
-        logs.append(hardware_info.get_bios_info(host))
-        logs.append(hardware_info.get_bmc_info(host))
-        logs.append(hardware_info.get_disk_info(host))
-        logs.append(hardware_info.get_firmware_info(host))
+        pass  # Already covered by is_host_alive
 
+    elif tag == "firmware":
+        info = hw.get_firmware_info()
+        logs.append(f"{timestamp()} [PASS] Firmware Info:\n{info}")
+        print(logs[-1])  # Print it to the console
+
+    elif tag == "cpu":
+        info = hw.get_cpu_info()
+        logs.append(f"{timestamp()} [PASS] CPU Info:\n{info}")
+        print(logs[-1])  # Print it to the console
+
+    elif tag == "bmc":
+        info = hw.get_bmc_info()
+        logs.append(f"{timestamp()} [PASS] BMC Info:\n{info}")
+        print(logs[-1])  # Print it to the console
+
+    elif tag == "all":
+        # Collecting and printing all hardware info
+        info = hw.get_cpu_info()
+        logs.append(f"{timestamp()} [PASS] CPU Info:\n{info}")
+        print(logs[-1])
+
+        info = hw.get_memory_info()
+        logs.append(f"{timestamp()} [PASS] Memory Info:\n{info}")
+        print(logs[-1])
+
+        info = hw.get_bios_info()
+        logs.append(f"{timestamp()} [PASS] BIOS Info:\n{info}")
+        print(logs[-1])
+
+        info = hw.get_bmc_info()
+        logs.append(f"{timestamp()} [PASS] BMC Info:\n{info}")
+        print(logs[-1])
+
+        info = hw.get_disk_info()
+        logs.append(f"{timestamp()} [PASS] Disk Info:\n{info}")
+        print(logs[-1])
+
+        info = hw.get_firmware_info()
+        logs.append(f"{timestamp()} [PASS] Firmware Info:\n{info}")
+        print(logs[-1])
+
+    # Write the logs to the results file
     write_logs(logs)
     return True
 

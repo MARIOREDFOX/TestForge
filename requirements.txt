@@ -1,7 +1,13 @@
+bcrypt==4.3.0
+cffi==1.17.1
 click==8.1.8
+cryptography==44.0.2
 markdown-it-py==3.0.0
 mdurl==0.1.2
+paramiko==3.5.1
+pycparser==2.22
 Pygments==2.19.1
+PyNaCl==1.5.0
 PyYAML==6.0.2
 rich==14.0.0
--e git+https://github.com/MARIOREDFOX/TestForge.git@be233adb8063b3f4f03130d6e7d8a32dfe4a8815#egg=testforge
+-e git+https://github.com/MARIOREDFOX/TestForge.git@58cc7200a5ce2895ad8df6a0c012a694975bf81a#egg=testforge
