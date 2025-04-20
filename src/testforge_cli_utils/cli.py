@@ -7,15 +7,6 @@ def cli():
     """TestForge - Hardware Automation CLI"""
     pass
 
-
-# @cli.command()
-# @click.option('--tag', default=None, help="Run tests by tag")
-# @click.option('--test', default=None, help="Run specific test file")
-# def run(tag, test):
-#    """Run tests"""
-#    run_tests(tag=tag, test=test)
-
-
 @click.command()
 @click.option("--tag", default=None, help="Tag to filter tests.")
 @click.option("--test", default=None, help="Test name to run.")
