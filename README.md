@@ -51,6 +51,7 @@ ssh-copy-id <username>@<target-ip>
 Test the Connection
 ssh <username>@<target-ip>
 
+
 Note:
 Check Linux Target's Firewall / SSH Access
 run:
@@ -115,6 +116,28 @@ testforge run --env examples/env.yaml
 testforge run --tag all --env examples/env.yaml --config-file examples/test_config.yaml
 
 python3 -m unittest discover tests
+
+Running it in local create these two files test_config.yaml & env.yaml:
+(.venv) marieinfa@marieinfa-mba TestForge % testforge run --tag all --env env.yaml --config-file test_config.yaml
+Running test: check_all_health with env: {'hostname': '192.168.1.6', 'username': 'mark'}
+[2025-04-20 13:31:22] === Running Test: check_all_health on 192.168.1.6 ===
+[2025-04-20 13:31:34] [FAIL] 192.168.1.6 is not reachable.
+Test check_all_health failed
+
+
+(.venv) marieinfa@marieinfa-mba TestForge % cat examples/env.yaml
+hostname: <ipaddress>
+username: <username>
+
+(.venv) marieinfa@marieinfa-mba TestForge % cat examples/test_config.yaml
+tests:
+  - name: check_ping
+    enabled: true
+    tags: [ping]
+
+  - name: check_all_health
+    enabled: true
+    tags: [all]
 ```
 ## License
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
