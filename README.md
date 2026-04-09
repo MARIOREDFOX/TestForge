@@ -1,13 +1,18 @@
-# TestForge
+# TestForge v0.3.0
 
-**TestForge** is a modular, CLI-based hardware/system-level test automation framework for validating technologies like CXL, PCIe, BMC, and firmware.
+CLI-based hardware/system-level test automation framework for validating
+**CXL**, **PCIe**, **BMC**, **firmware**, **NVMe**, **stress**, **logs**, and general platform health over SSH.
 
-## Features
+---
 
-- Modular protocol support (CXL, IPMI/Redfish, PCIe)
-- YAML-based configuration
-- Rich CLI interface
-- Scalable and pip-installable
+## Install
+
+```bash
+pip install testforge-cli-utils[ssh]   # includes paramiko
+# or
+pip install testforge-cli-utils
+pip install paramiko                   # SSH support
+```
 
 ## Installation
 ```bash
@@ -62,51 +67,175 @@ sudo systemctl status ssh
 sudo systemctl start ssh
 
 ```
+---
 
-## 📁 Project Structure
+## Quick Start
 
-```text
-testforge/
-├── src/
-│   └── testforge/
-│       ├── cli.py
-│       ├── core/
-│       │   ├── executor.py
-│       │   ├── loader.py
-│       │   ├── reporter.py
-│       │   └── logger.py
-│       ├── protocols/
-│       │   ├── __init__.py
-│       │   ├── bmc/
-│       │   │   ├── redfish.py
-│       │   │   └── ipmi.py
-│       │   ├── cxl.py
-│       │   └── pcie.py
-│       ├── tests/
-│       │   ├── __init__.py
-│       │   ├── firmware/
-│       │   ├── stress/
-│       │   ├── health/
-│       │   └── regression/
-│       ├── config/
-│       │   └── config_loader.py
-│       ├── utils/
-│       │   ├── ssh.py
-│       │   ├── retry.py
-│       │   └── parser.py
-├── tests/
-│   └── test_executor.py
-├── examples/
-│   ├── env.yaml
-│   └── test_config.yaml
-├── docs/
-│   └── architecture.md
-├── LICENSE
-├── README.md
-├── setup.py
-├── setup.cfg
-└── pyproject.toml
+```bash
+# Run by tag against a host
+testforge run 192.168.1.10 --tag system
+testforge run 192.168.1.10 --tag cxl
+testforge run 192.168.1.10 --tag pcie
+testforge run 192.168.1.10 --tag bmc
+testforge run 192.168.1.10 --tag firmware
+testforge run 192.168.1.10 --tag stress
+testforge run 192.168.1.10 --tag logs
+testforge run 192.168.1.10 --tag all
+
+# Or use an env file
+testforge run --env examples/env.yaml --tag nvme
+
+# One-shot probe (no config file needed)
+testforge probe 192.168.1.10 --check pcie
+
+# Firmware snapshot + compare (before/after upgrade)
+testforge fw-snapshot 192.168.1.10 --output before.json
+# ... upgrade firmware ...
+testforge fw-compare  192.168.1.10 --before before.json
 ```
+
+---
+
+## All Supported Tags
+
+| Tag          | What it validates                                                |
+|--------------|------------------------------------------------------------------|
+| `ping`       | ICMP reachability                                                |
+| `system`     | os + cpu + memory + bios + firmware combined                    |
+| `os`         | OS release, kernel, uptime                                       |
+| `cpu`        | lscpu, topology, frequency, CPU vulnerabilities (Spectre/etc)   |
+| `memory`     | free -h, ECC status + error counters, DMI DIMM info             |
+| `bios`       | dmidecode BIOS/UEFI                                              |
+| `firmware`   | BIOS, BMC, NIC, NVMe firmware + kernel + microcode              |
+| `bmc`        | ipmitool mc info, SDR, SEL, SEL errors, power, FRU, LAN        |
+| `disk`       | lsblk + SMART status (smartmontools)                            |
+| `nvme`       | nvme list, SMART health log, error log (nvme-cli)               |
+| `pcie`       | lspci, Gen/width summary, AER sysfs errors                      |
+| `cxl`        | /sys/bus/cxl, lspci 0502, mem info, errors, latency, dmesg     |
+| `nic`        | ip link, speed/duplex/state, errors/drops, ethtool              |
+| `network`    | Packet loss % + latency validation (configurable thresholds)    |
+| `thermal`    | Thermal zones (°C), fan speeds, voltage sensors                 |
+| `power`      | IPMI DCMI power reading                                         |
+| `numa`       | numactl topology                                                 |
+| `hugepages`  | /proc/meminfo + /sys/kernel/mm/hugepages                        |
+| `stress`     | CPU stress (stress-ng), memory stress, IO stress (fio), bandwidth|
+| `logs`       | dmesg errors, MCE events, crash signatures, BMC SEL errors      |
+| `all`        | Everything in one pass                                           |
+
+---
+
+## Commands
+
+### `testforge run`
+```
+testforge run [HOST] [--tag TAG] [--env ENV_FILE] [--config-file FILE]
+```
+
+### `testforge probe`
+```
+testforge probe <HOST> --check <TAG>
+```
+
+### `testforge fw-snapshot` / `testforge fw-compare`
+```
+testforge fw-snapshot <HOST> --output before.json
+testforge fw-compare  <HOST> --before before.json
+```
+
+---
+
+## Environment File
+
+```yaml
+hostname: 192.168.1.6
+username: root
+# password: "secret"
+# key_filename: "~/.ssh/id_rsa"
+
+# Network thresholds
+max_packet_loss_pct: 5
+max_latency_ms: 200
+latency_target: "8.8.8.8"
+
+# Stress thresholds
+stress_thresholds:
+  cpu_stress_duration: 30
+  mem_stress_duration: 30
+  io_stress_duration:  30
+  mem_stress_vm_bytes: "1G"
+
+# Parallel multi-host
+# hosts: [192.168.1.10, 192.168.1.11, 192.168.1.12]
+# parallel_workers: 3
+```
+
+---
+
+## Parallel Execution
+
+TestForge can run the same test suite against multiple hosts concurrently:
+
+```yaml
+# env.yaml
+hosts:
+  - 192.168.1.10
+  - 192.168.1.11
+  - 192.168.1.12
+parallel_workers: 3
+username: root
+```
+
+```bash
+testforge run --env env.yaml --tag pcie
+```
+
+---
+
+## Firmware Upgrade Workflow
+
+```bash
+# 1. Capture baseline
+testforge fw-snapshot 192.168.1.10 --output fw_before.json
+
+# 2. Perform firmware upgrade (outside TestForge)
+
+# 3. Compare
+testforge fw-compare 192.168.1.10 --before fw_before.json
+# Output:
+#   Changed (2):   bios_version, bmc_firmware
+#   Unchanged (4): kernel, microcode, nvme_firmware, nic_firmware
+```
+
+---
+
+## External Tools Used
+
+| Tool         | Package              | Purpose                        |
+|--------------|----------------------|--------------------------------|
+| `ipmitool`   | ipmitool             | BMC/IPMI access                |
+| `nvme`       | nvme-cli             | NVMe health + firmware         |
+| `smartctl`   | smartmontools        | SATA/SAS SMART                 |
+| `stress-ng`  | stress-ng            | CPU/memory/IO stress           |
+| `fio`        | fio                  | IO benchmark                   |
+| `dmidecode`  | dmidecode            | BIOS/memory DMI tables         |
+| `edac-util`  | edac-utils           | ECC error counters             |
+| `mcelog`     | mcelog               | MCE (Machine Check Exceptions) |
+| `numactl`    | numatools            | NUMA topology                  |
+| `lm-sensors` | lm-sensors           | Temperature/voltage/fan        |
+| `ethtool`    | ethtool              | NIC details                    |
+
+All tools are optional — missing tools produce `[UNAVAILABLE]` messages, not crashes.
+
+---
+
+## Development
+
+```bash
+pip install -e ".[ssh]"
+python -m pytest tests/ -v
+```
+
+
 ## Usage
 
 ```bash
@@ -139,9 +268,4 @@ tests:
     enabled: true
     tags: [all]
 ```
-## License
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
-## PYPI
-[![PyPI version](https://badge.fury.io/py/testforge-cli-utils.svg)](https://badge.fury.io/py/testforge-cli-utils)
-
+License: GPL-3.0

@@ -1,14 +1,24 @@
-import paramiko
+"""
+Legacy ssh.py kept for backward compatibility.
+New code should use SSHCommand from ssh_command.py directly.
+"""
+from __future__ import annotations
+import logging
+from testforge_cli_utils.utils.ssh_command import SSHCommand, _PARAMIKO_AVAILABLE
 
-def ssh_connect(host, username, password):
-    """Connect to a remote host via SSH."""
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(host, username=username, password=password)
-    return ssh
+logger = logging.getLogger("testforge.ssh_legacy")
 
-def run_ssh_command(ssh, command):
-    """Run a command on the remote server."""
-    stdin, stdout, stderr = ssh.exec_command(command)
-    return stdout.read().decode(), stderr.read().decode()
 
+def ssh_connect(host: str, username: str, password: str = None, key_filename: str = None):
+    """Return a connected SSHCommand instance."""
+    return SSHCommand(
+        host=host,
+        username=username,
+        password=password,
+        key_filename=key_filename,
+    )
+
+
+def run_ssh_command(ssh: SSHCommand, command: str):
+    """Run a command via an SSHCommand instance. Returns (stdout, stderr)."""
+    return ssh.run(command)

@@ -4,19 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "testforge-cli-utils"
-version = "0.1.6"
-description = "Test Automation Framework for system-level validation (CXL, PCIe, BMC, firmware)"
-authors = [
-    { name = "Marie Infantraj", email = "marioredfoxfshm@gmail.com" }
-]
+version = "0.2.0"
+description = "Hardware/System-level test automation for CXL, PCIe, BMC, and firmware validation."
+authors = [{ name = "Marie Infantraj", email = "marioredfoxfshm@gmail.com" }]
 license = { text = "GPL-3.0-or-later" }
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 dependencies = [
-    "click",
-    "pyyaml",
-    "rich"
+    "click>=8.0",
+    "requests>=2.28",
+    "PyYAML>=6.0",
+    "rich>=13.0",
 ]
+
+[project.optional-dependencies]
+ssh = ["paramiko>=3.0"]
+all = ["paramiko>=3.0"]
 
 [project.scripts]
 testforge = "testforge_cli_utils.cli:cli"

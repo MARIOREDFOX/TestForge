@@ -1,8 +1,103 @@
+# TestForge test configuration
+# Run:  testforge run --env examples/env.yaml --tag <tag>
+# Or:   testforge run <host> --tag <tag>
+
 tests:
+  # --- Connectivity ---
   - name: check_ping
     enabled: true
     tags: [ping]
+    retries: 2
 
-  - name: check_all_health
+  # --- System-Level Validation ---
+  - name: check_system
     enabled: true
+    tags: [system]          # os + cpu + memory + bios + firmware combined
+
+  - name: check_os
+    enabled: false
+    tags: [os]
+
+  - name: check_cpu
+    enabled: true
+    tags: [cpu]
+
+  - name: check_memory
+    enabled: true
+    tags: [memory]          # includes ECC status
+
+  - name: check_bios
+    enabled: true
+    tags: [bios]
+
+  # --- Firmware ---
+  - name: check_firmware
+    enabled: true
+    tags: [firmware]        # BIOS, BMC, NIC, NVMe, kernel, microcode
+
+  # --- BMC ---
+  - name: check_bmc
+    enabled: true
+    tags: [bmc]             # mc info, SDR, SEL, power, FRU, LAN
+
+  # --- Storage ---
+  - name: check_disk
+    enabled: true
+    tags: [disk]            # lsblk + SMART
+
+  - name: check_nvme
+    enabled: true
+    tags: [nvme]            # nvme list, SMART health log, error log
+
+  # --- PCIe ---
+  - name: check_pcie
+    enabled: true
+    tags: [pcie]            # devices, Gen/width, AER errors
+
+  # --- CXL ---
+  - name: check_cxl
+    enabled: true
+    tags: [cxl]             # devices, mem, topology, errors, latency
+
+  # --- Network ---
+  - name: check_nic
+    enabled: true
+    tags: [nic]             # ip link, speed, errors, ethtool
+
+  - name: check_network
+    enabled: true
+    tags: [network]         # packet loss + latency validation
+
+  # --- Thermal / Power ---
+  - name: check_thermal
+    enabled: true
+    tags: [thermal]
+
+  - name: check_power
+    enabled: true
+    tags: [power]
+
+  # --- Advanced ---
+  - name: check_numa
+    enabled: true
+    tags: [numa]
+
+  - name: check_hugepages
+    enabled: true
+    tags: [hugepages]
+
+  # --- Stress Testing ---
+  - name: check_stress
+    enabled: false          # set true to run — takes 90+ seconds
+    tags: [stress]
+    retries: 1
+
+  # --- Log Validation ---
+  - name: check_logs
+    enabled: true
+    tags: [logs]            # dmesg errors, MCE, crash signatures, BMC SEL
+
+  # --- Full sweep ---
+  - name: check_all
+    enabled: false
     tags: [all]
